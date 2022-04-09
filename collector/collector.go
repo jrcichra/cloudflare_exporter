@@ -262,7 +262,7 @@ func (collector *CloudflareCollector) collectDNS(ch chan<- prometheus.Metric) er
 					zone.Name, node.Dimensions[0], node.Dimensions[1], node.Dimensions[2], node.Dimensions[3], node.Dimensions[4])
 			}
 		} else {
-			log.Println("Fetch failed :", err)
+			log.Println("DNS Fetch failed:", err)
 		}
 	}
 	return nil
@@ -294,7 +294,7 @@ func (collector *CloudflareCollector) collectDNSFirewall(ch chan<- prometheus.Me
 					vdns.Name, node.Dimensions[0], node.Dimensions[1], node.Dimensions[2], node.Dimensions[3], node.Dimensions[4])
 			}
 		} else {
-			log.Println("Fetch failed :", err)
+			log.Println("vDNS Fetch failed :", err)
 		}
 	}
 
@@ -346,7 +346,7 @@ func (collector *CloudflareCollector) collectHTTP(ch chan<- prometheus.Metric) e
 				ch <- collector.updateMetric("requests_by_http_version", float64(node.Requests), node.ClientHTTPProtocol, zone.Name)
 			}
 		} else {
-			log.Println("Fetch failed :", err)
+			log.Println("HTTP Fetch failed :", err)
 		}
 	}
 	return nil
@@ -371,7 +371,7 @@ func (collector *CloudflareCollector) collectWAF(ch chan<- prometheus.Metric) er
 				ch <- collector.updateMetric("events", float64(node.Count), node.Dimensions.ASName, node.Dimensions.Country, node.Dimensions.Action, node.Dimensions.RuleID, zone.Name)
 			}
 		} else {
-			log.Println("Fetch failed :", err)
+			log.Println("WAF Fetch failed :", err)
 		}
 	}
 	return nil
@@ -382,7 +382,7 @@ func (collector *CloudflareCollector) collectWorkers(ch chan<- prometheus.Metric
 	log.Printf("Getting Worker metrics for %s from %s to %s \n", collector.accountID, collector.startDate, collector.endDate)
 	resp, err := getCloudflareWorkerMetrics(collector.startDate, collector.endDate, collector.accountID, collector.apiEmail, collector.apiKey)
 	if err != nil {
-		log.Println("Fetch Failed:", err)
+		log.Println("Workers Fetch Failed:", err)
 		return err
 	}
 	for _, node := range resp.Viewer.Accounts[0].Workers {
@@ -426,7 +426,7 @@ func (collector *CloudflareCollector) collectNetwork(ch chan<- prometheus.Metric
 			)
 		}
 	} else {
-		log.Println("Fetch failed :", err)
+		log.Println("Network Fetch failed :", err)
 	}
 	return nil
 }
