@@ -5,9 +5,7 @@ LABEL version=1.0
 RUN apk update && \
     apk add --no-cache git && \
     apk add --no-cache ca-certificates && \
-    update-ca-certificates 2>/dev/null || true && \
-    go get -u github.com/golang/dep/cmd/dep && \
-    dep ensure
+    update-ca-certificates 2>/dev/null
 
 WORKDIR /app
 COPY . .
