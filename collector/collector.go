@@ -1,6 +1,7 @@
 package collector
 
 import (
+	"context"
 	"errors"
 	"log"
 	"strconv"
@@ -220,12 +221,12 @@ func (collector *CloudflareCollector) login() error {
 	if err != nil {
 		return err
 	}
-	collector.zones, err = collector.API.ListZones()
+	collector.zones, err = collector.API.ListZones(context.Background())
 	if err != nil {
 		return err
 	}
 	if collector.accountID != "" {
-		collector.account, _, err = collector.API.Account(collector.accountID)
+		collector.account, _, err = collector.API.Account(context.Background(), collector.accountID)
 		if err != nil {
 			return err
 		}
@@ -268,7 +269,7 @@ func (collector *CloudflareCollector) collectDNS(ch chan<- prometheus.Metric) er
 }
 
 func (collector *CloudflareCollector) collectDNSFirewall(ch chan<- prometheus.Metric) error {
-	vDNSList, err := collector.API.ListVirtualDNS()
+	vDNSList, err := collector.API.ListVirtualDNS(context.Background())
 	if err != nil {
 		return err
 	}

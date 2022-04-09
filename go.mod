@@ -5,7 +5,6 @@ go 1.18
 require (
 	github.com/cloudflare/cloudflare-go v0.36.0
 	github.com/machinebox/graphql v0.2.2
-	github.com/maesoser/cloudflare_exporter v0.0.0-20210119093741-f804d5ca6d5a
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.12.1
 )
